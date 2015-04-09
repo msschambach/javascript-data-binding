@@ -25,7 +25,11 @@
       value:function (event_name,cb,data) {
         if(!!event_name && !!cb){
           // Register event
-          $this.$events[event_name] = new CustomEvent(event_name,data);
+          if(!($this.$events[event_name])){
+            $this.$events[event_name] = new CustomEvent(event_name,data);
+          }else{
+            throw new Error('The event "' + event_name + '" has already been registered!');
+          }
 
           // Add event listener
           this.forEach(function(item){
