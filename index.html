@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DataBinding Test</title>
+
+</head>
+<body>
+
+  <p class="test">I'm a test!</p>
+  <p class="test">I'm another test!</p>
+  <p class="test">I'm a third test!</p>
+
+<script src="main.js" charset="utf-8"></script>
+<script charset="utf-8" type="text/javascript">
+ var test = new Binder(".test");
+
+
+ test.$on('crazy',function () {
+   this.innerHTML = "It works!";
+ });
+
+ test.$trigger('crazy');
+</script>
+</body>
+</html>
