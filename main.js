@@ -15,33 +15,41 @@
       }
     });
 
-    this.$events = {};
+    //Define $events
+    Object.defineProperty(this,'$events',{
+      value:{}
+    });
 
-    this.$on = function (event_name,cb,data) {
-      if(!!event_name && !!cb){
-        // Register event
-        $this.$events[event_name] = new CustomEvent(event_name,data);
+    //Define $on
+    Object.defineProperty(this,'$on',{
+      value:function (event_name,cb,data) {
+        if(!!event_name && !!cb){
+          // Register event
+          $this.$events[event_name] = new CustomEvent(event_name,data);
 
-        // Add event listener
-        this.forEach(function(item){
-          item.addEventListener(event_name,cb, false);
-        });
-      }else{
-        throw new Error("Too few parameters, expecting (String event_name,Function callback)!");
-      }
-    }.bind(this.$el);
+          // Add event listener
+          this.forEach(function(item){
+            item.addEventListener(event_name,cb, false);
+          });
+        }else{
+          throw new Error("Too few parameters, expecting (String event_name,Function callback)!");
+        }
+      }.bind(this.$el)
+    });
 
-    this.$trigger = function(event_name){
-      if(!!event_name){
-        // Dispatch Event
-        this.forEach(function(item){
-          item.dispatchEvent($this.$events[event_name]);
-        });
-      }else{
-        throw new Error("Too few parameteres, expecting (String event_name)");
-      }
-    }.bind(this.$el);
-
+    // Define $trigger
+    Object.defineProperty(this,'$trigger',{
+      value:function(event_name){
+        if(!!event_name){
+          // Dispatch Event
+          this.forEach(function(item){
+            item.dispatchEvent($this.$events[event_name]);
+          });
+        }else{
+          throw new Error("Too few parameteres, expecting (String event_name)");
+        }
+      }.bind(this.$el)
+    });
 
   };
 
