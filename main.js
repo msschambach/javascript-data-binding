@@ -2,17 +2,18 @@
   "use strict";
 
 
-  function $sel(selector){
-    // Return a true array instead of a NodeList
-    return Array.prototype.map.call($d.querySelectorAll(selector),function(element){
-      return element;
-    });
-  }
-
   function Binder(el){
     var $this = this;
 
-    this.$el = $sel(el);
+    //Define $el property
+    Object.defineProperty(this,'$el',{
+      get:function(){
+        // Return a true array instead of a NodeList
+        return Array.prototype.map.call($d.querySelectorAll(el),function(element){
+          return element;
+        });
+      }
+    });
 
     this.$events = {};
 
@@ -41,7 +42,7 @@
       }
     }.bind(this.$el);
 
-    
+
   };
 
   Binder.prototype = new Object();
